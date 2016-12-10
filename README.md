@@ -11,3 +11,5 @@ To create this presentation REVEAL.JS was used. See lab.hakim.se/reveal-js/
 ## Images source
 
  * https://unsplash.com/photos/AVLueMVuVUs
+ * https://unsplash.com/?photo=2fgvaQX-FXs
+ * https://unsplash.com/?photo=VfUN94cUy4o
