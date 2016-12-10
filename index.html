@@ -74,6 +74,11 @@ foo(0);         //"foo"
 foo(NULL);      //we expect foo(const char*) to be called 
                 //but foo(int) is called
                         </code></pre>
+                        <aside class="notes">
+                            (slides downwards)
+
+                            Yeah, the issue is with the fact that NULL is int, not a pointer, what may be suprising
+                        </aside>
                     </section>
                     <section>
                         <h2>nullptr</h2>
@@ -92,6 +97,11 @@ void foo(const char* a)
 foo(1);         //"foo"
 foo(nullptr);   // everything is clear
                         </pre></code>
+                        <aside class="notes">
+                            (slide downwards)
+
+                            simple solution, nullptr is always a pointer
+                        </aside>
                     </section>
                     <section>
                         <h2>nullptr - Silent Conversion</h2>
@@ -110,6 +120,9 @@ float i = nullptr;                          //error
 auto j = nullptr;                           //works
 int imposible = a + j;                      //nullptr saves the day!
                         </code></pre>
+                        <aside class="notes">
+                            NULL can be casted to practically anything, what may hide errors, nullptr will generate the error where it's expected
+                        </aside>
                     </section>
                 </section>
                 <section>
@@ -119,6 +132,7 @@ int imposible = a + j;                      //nullptr saves the day!
 std::vector&#60std::pair&#60int,std::string>> vec;
 std::vector&#60std::pair&#60int,std::string>>::const_iterator it = vec.cbegin();
                         </pre></code>
+                        <aside class="notes">slides downwards</aside>
                     </section>
                     <section>
                         <h2>Auto</h2>
@@ -134,6 +148,11 @@ std::vector&#60int> V;
 auto it = func(V); // std::vector&#60int>::iterator it = func(V)
 auto intPtr = new int; // int* intPtr = new int;
                         </code></pre>
+                        <aside class="notes">
+                            (slides downwards)
+
+                            Remember to think about code clarity all the time - is auto helping, or requiring you to dig through the code to find out what is actually expected there?
+                        </aside>
                     </section>
                     <section>
                         <h2>REMEMBER! Auto does not understand reference!</h2>
@@ -155,11 +174,17 @@ auto a = new SomeClass();
 auto b = func(*a);      // copy constructor as auto b === SomeClass b;
 auto& c = func(*a);     // no constructor called,
                         </code></pre>
+                        <aside class="notes">
+                            It only takes the type, modifiers are ignored - remember about it!
+                        </aside>
                     </section>
                 </section>
                 <section>
                     <section>
                         <p><strong>Problem:</strong> Make C arrays work with STL containters interface</p>
+                        <aside class="notes">
+                            slides downwards
+                        </aside>
                     </section>
                     <section>
                         <h3>std::begin and std::end function</h3>
@@ -187,6 +212,11 @@ for (vector&#60int>::iterator it = vec.begin(); it != vec.end(); ++it)
     //Do some stuff here;
 }
                         </code></pre>
+                        <aside class="notes">
+                            (slides downwards)
+
+                            I was always envious of other languages which had range-based loops
+                        </aside>
                     </section>
                     <section>
                         <h2>Range Based Loops</h2>
@@ -202,6 +232,11 @@ for (auto el : vec)     //element will be copy of element of vector
 for (const auto el : vec)   //const refference should be most used snippet
     foo(el);                
                         </code></pre>
+                        <aside class="notes">
+                            (slides downwards)
+
+                            Remember about consts, &s and whatnot
+                        </aside>
                     </section>
                     <section>
                         <h3> It works even for C arrays!</h3>
@@ -210,6 +245,9 @@ int vec[] = {2,3,4,5,6};
 for (const auto& el : vec)
     std::cout << el;
                         </code></pre>
+                        <aside class="notes">
+                            (slides downwards)
+                        </aside>
                     </section>
                     <section>
                         <h3>Range based for custom container</h3>
@@ -242,6 +280,9 @@ for(const auto& el : c)
 someNamespace::someLongType foo();
 typedef someNamespace::someLongType someAnotherType;
                         </code></pre>
+                        <aside class="notes">
+                            slides downwards
+                        </aside>
                     </section>
                     <section>
                         <h2>Decltype</h2>
@@ -254,6 +295,11 @@ typedef decltype(foo()) someAnotherType;
                         <pre><code class="cpp" contenteditable>
 decltype(foo) x;
                         </code></pre>
+                        <aside class="notes">
+                            (slides downside)
+
+                            Remember that it makes the code more complicated to understand, but it is unenvitable in many situations - mainly, our beloved templates where we sometimes don't really know what we are going to get
+                        </aside>
                     </section>
                     <section>
                         <h3>Differences between Auto and Decltype in type deduction</h3>
@@ -278,6 +324,9 @@ auto a = p->m;      //int a; drops const of ptr;
 decltype(p->m);     //same as auto;
 decltype((p->m)) d; //const int& d;
                         </code></pre>
+                        <aside class="notes">
+                            This is only situation, when () != (()) in C++.
+                        </aside>
                     </section>
                 </section>
                 <section>
@@ -288,6 +337,9 @@ std::string foo();
 std::vector&#60std::pair&#60int, std::string>> bar();
 STransportBearerRegisterResp* fun();
                         </code></pre>
+                        <aside class="notes">
+                            slides downwards
+                        </aside>
                     </section>
                     <section>
                         <h2> Alternative Function declaration syntax </h2>
@@ -309,6 +361,9 @@ XXXX sum(T a, U b)
                 //witch type is imaginary?
 }
                         </code></pre>
+                        <aside class="notes">
+                            slides downwards
+                        </aside>
                     </section>
                     <section>
                     </code></pre>
@@ -339,6 +394,11 @@ private:
     Divider&#60 0 >() {}
 };
                     </pre></code>
+                    <aside class="notes">
+                        (slides downwards)
+
+                        The issue here is, that we want to disallow dividing by 0
+                    </aside>
                 </section>
                 <section>
                     <h2>Static Assertions</h2>
@@ -353,6 +413,13 @@ struct Divider
     int operator()(int v) const { return v/DIV; };
 };
                     </code></pre>
+                    <aside class="notes">
+                        (slides downwards)
+
+                        Same idea as boost::static_assert.
+
+                        Basically an assertion which can explode during compilation instead of runtime.
+                    </aside>
                 </section>
                 <section>
                     <p><strong>Problem:</strong> allow Divider divide float and doble</p>
