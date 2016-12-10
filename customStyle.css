@@ -1,0 +1,31 @@
+::selection {
+  background: #183693;
+}
+
+.reveal a {
+  color: #183693;
+}
+
+.reveal a:hover img {
+  border-color: #183693;
+}
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-left.enabled {
+  border-right-color: #183693; }
+
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-right.enabled {
+  border-left-color: #183693; }
+
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-up.enabled {
+  border-bottom-color: #183693; }
+
+.reveal .controls .navigate-down,
+.reveal .controls .navigate-down.enabled {
+  border-top-color: #183693; }
+
+.reveal .progress span {
+  background: #183693;
+}
