@@ -948,18 +948,19 @@ std::map&#60int, string> m{ {1, "one"}, {2, "two"} };
                 <section>
                     <h2>C++11 default {} initialization</h2>
                     <pre><code class="cpp" contenteditable>
-int i{}         // int i = 0;
-int * i{}       // int *i = nullptr;
-double d{}      // double d=0.0;
-int char[5]{}   // all initialized to 0;
-Class c{}       // default constructor; (if no initializer_list c-tor defined)
-Struct s{}      // all members initialized to 0;
+int i{};         // int i = 0;
+int * i{};       // int *i = nullptr;
+double d{};      // double d=0.0;
+int char[5]{};   // all initialized to 0;
+Class c{};       // default constructor; (if no initializer_list c-tor defined)
+Struct s{};      // all members initialized to 0;
                     </code></pre>
                 </section>
             </section>
             <section>
                 <section>
                     <p><strong>Problem:</strong> Initialize custom container like C array</p>
+                    <aside class="notes">slides downwards</aside>
                 </section>
                 <section>
                     <h2>Initializers list</h2>
@@ -970,7 +971,9 @@ struct S {
     std::vector&#60T> v;
     S(int a) {v.resize(a)}
     S(std::initializer_list&#60T> l) : v(l);
-    void append(std::initializer_list&#60T> l) { v.insert(v.end(), l.begin(), l.end()) };
+    void append(std::initializer_list&#60T> l){
+        v.insert(v.end(), l.begin(), l.end());
+    }
 };
 
 S&#60int> a{1,2,3,4,5,6};  //initializer list c-tor 
@@ -989,26 +992,34 @@ S&#60B> c{5};               //initializer list c-tor again
             <section>
                 <section>
                     <p><strong>Problem: </strong> Generate code of concrete instantiation of template in every compilation unit it was used</p>
+                    <aside class="notes">slides downwards</aside>
                 </section>
                 <section>
                     <h2>Extern template</h2>
                     <p>We can inform compiler that concrete instantiation of template class will be instantiated in another compilation unit<p>
                      <pre><code class="cpp" contenteditable>
-//template header
 template&#60typename T>
 class someClass
 {
     //a lot of logic here to optimize
 }
-//all of cpps but one
+
+/////////////////////////
+// all of cpps but one //
+/////////////////////////
 #include "template_header.hpp"
 extern template someClass&#60int>;
 someClass&#60int> someObject;
 
-//one cpp
-#include "template_header.hpp
+//////////////////////////////////////
+// one cpp where it is instantiated //
+//////////////////////////////////////
+#include "template_header.hpp"
 someClass&#60int> anotherObject;
                         </pre></code>
+                        <aside class="notes">
+                            we instantiate the logic in only one place, therefore make compilation time shorter
+                        </aside>
                     </section>
                 </section>
                 <section>
