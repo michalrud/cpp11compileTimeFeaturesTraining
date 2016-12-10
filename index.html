@@ -1,74 +1,65 @@
 <!doctype html>
 <html lang="en">
-
-	<head>
-		<meta charset="utf-8">
-
-		<title>C++11 Compile Time Features training</title>
-
-		<meta name="description" content="C++11 compile time features overview">
-		<meta name="author" content="Marcin Grzebieluch">
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/night.css" id="theme">
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <head>
+        <meta charset="utf-8">
+        <title>C++11 Compile Time Features training</title>
+        <meta name="description" content="C++11 compile time features overview">
+        <meta name="author" content="Marcin Grzebieluch">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/night.css" id="theme">
+        <link rel="stylesheet" href="lib/css/zenburn.css">
         <link rel="stylesheet" href="customStyle.css">
-		<script>
-			if( window.location.search.match( /print-pdf/gi ) ) {
-				var link = document.createElement( 'link' );
-				link.rel = 'stylesheet';
-				link.type = 'text/css';
-				link.href = 'css/print/pdf.css';
-				document.getElementsByTagName( 'head' )[0].appendChild( link );
-			}
-		</script>
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
-
-	<body>
-
-		<div class="reveal">
-
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
-
-                                <section>
-                                    <h2>C++11 Features Overview - Compiletime</h2>
-                                    <p>
-                                    <small>Created by <strong>Marcin Grzebieluch</strong></small>
-                                    </p>
-                                </section>
-
-				<section>
-					<h2>Agenda</h2>
-                                        <ul>
-                                            <li>nullptr</li>
-                                            <li>auto</li>
-                                            <li>std::begin, std::end</li>
-                                            <li>range-based for loop</li>
-                                            <li>alternative function syntax</li>
-                                            <li>decltype</li>
-                                            <li>static assertions</li>
-                                            <li>override and final</li>
-                                            <li>default and delete</li>
-                                            <li>strongly-typped enums</li>
-                                            <li>alias templates</li>
-                                            <li>generalized constant expressions</li>
-                                            <li>variadic templates</li>
-                                            <li>initializer's list</li>
-                                            <li>unified initialization</li>
-                                            <li>extern templates</li>
-                                        </ul>
-                                </section>
-                                <section>
-					<section>
-                                        <p><strong>Problem:</strong></p>
-					<pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="reveal">
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h2>C++11 Features Overview - Compiletime</h2>
+                    <p>
+                        <small>Created by <strong>Marcin Grzebieluch</strong></small>
+                    </p>
+                </section>
+                <section>
+                    <h2>Agenda</h2>
+                    <ul>
+                        <li>nullptr</li>
+                        <li>auto</li>
+                        <li>std::begin, std::end</li>
+                        <li>range-based for loop</li>
+                        <li>alternative function syntax</li>
+                        <li>decltype</li>
+                        <li>static assertions</li>
+                        <li>override and final</li>
+                        <li>default and delete</li>
+                        <li>strongly-typped enums</li>
+                        <li>alias templates</li>
+                        <li>generalized constant expressions</li>
+                        <li>variadic templates</li>
+                        <li>initializer's list</li>
+                        <li>unified initialization</li>
+                        <li>extern templates</li>
+                    </ul>
+                </section>
+                <section>
+                    <section>
+                        <p><strong>Problem:</strong></p>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 void foo(int a)
 {
     std::cout << "foo" << std::endl;
@@ -82,12 +73,12 @@ void foo(const char* a)
 foo(0);         //"foo"
 foo(NULL);      //we expect foo(const char*) to be called 
                 //but foo(int) is called
-                                        </code></pre>
-					</section>
-                                        <section>
-                                           <h2>nullptr</h2>
-                                           <p>nullptr is more or less <code>const void * nullptr = 0</code></p>
-                                           <pre><code class="cpp" contenteditable>
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>nullptr</h2>
+                        <p>nullptr is more or less <code>const void * nullptr = 0</code></p>
+                                       <pre><code class="cpp" contenteditable>
 void foo(int a)
 {
     std::cout << "foo" << std::endl;
@@ -100,11 +91,11 @@ void foo(const char* a)
 
 foo(1);         //"foo"
 foo(nullptr);   // everything is clear
-                                        </pre></code>
-                                        </section>
-                                        <section>
-						<h2>nullptr - Silent Conversion</h2>
-					        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                        </pre></code>
+                    </section>
+                    <section>
+                        <h2>nullptr - Silent Conversion</h2>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 bool a = NULL;                              //works
 int b = NULL;                               //works
 char c = NULL;                              //works
@@ -118,21 +109,21 @@ char h = nullptr;                           //error
 float i = nullptr;                          //error
 auto j = nullptr;                           //works
 int imposible = a + j;                      //nullptr saves the day!
-                                                </code></pre>
-					</section>
-				</section>
-                                <section>
-                                    <section>
-                                        <p><strong>Problem</strong> Verbose code</p>
-                                        <pre><code class="cpp" contenteditable>
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p><strong>Problem</strong> Verbose code</p>
+                        <pre><code class="cpp" contenteditable>
 std::vector&#60std::pair&#60int,std::string>> vec;
 std::vector&#60std::pair&#60int,std::string>>::const_iterator it = vec.cbegin();
-                                        </pre></code>
-                                    </section>
-                                    <section>
-                                        <h2>Auto</h2>
-                                            <p>Auto tries to deduce type from right side of = symbol. It uses same rules as template type deduction.</p>
-					    <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                        </pre></code>
+                    </section>
+                    <section>
+                        <h2>Auto</h2>
+                        <p>Auto tries to deduce type from right side of = symbol. It uses same rules as template type deduction.</p>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 std::vector&#60std::pair&#60int,std::string>> vec;
 auto it = vec.cbegin();
 
@@ -142,12 +133,12 @@ typename std::vector&#60T>::iterator func(std::vector&#60T>&);
 std::vector&#60int> V;
 auto it = func(V); // std::vector&#60int>::iterator it = func(V)
 auto intPtr = new int; // int* intPtr = new int;
-                                            </code></pre>
-                                    </section>
-                                    <section>
-                                        <h2>REMEMBER! Auto does not understand reference!</h2>
-                                        <p>Same rule applies to const</p>
-					    <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>REMEMBER! Auto does not understand reference!</h2>
+                        <p>Same rule applies to const</p>
+                            <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 struct SomeClass {
     SomeClass() {
         std::cout &#60&#60 "default Ctor" &#60&#60std::endl;
@@ -163,45 +154,44 @@ SomeClass& func(SomeClass& a){
 auto a = new SomeClass();
 auto b = func(*a);      // copy constructor as auto b === SomeClass b;
 auto& c = func(*a);     // no constructor called,
-                                            </code></pre>
-                                    </section>
-                                </section>
-                                <section>
-                                <section>
-                                    <p><strong>Problem:</strong> Make C arrays work with STL containters interface</p>
-                                </section>
-                                <section>
-                                    <h3>std::begin and std::end function</h3>
-                                    <p>C++11 introduces free functions for geting begin and end iterator of container. It was required to keep same interface for std container and C arrays</p>
-                                    <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p><strong>Problem:</strong> Make C arrays work with STL containters interface</p>
+                    </section>
+                    <section>
+                        <h3>std::begin and std::end function</h3>
+                        <p>C++11 introduces free functions for geting begin and end iterator of container. It was required to keep same interface for std container and C arrays</p>
+                        <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 int array[] = {1,2,3,4};
 for (auto it = std::begin(array); it &#60 std::end(array); ++it)
     ++(*it);
-                                    </code></pre>
-                                    <p>It allows us to use C arrays exacly same way STL as containsers</p>
-                                    <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                        </code></pre>
+                        <p>It allows us to use C arrays exacly same way STL as containsers</p>
+                        <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 int array[] = {1,2,3,4,5};
 int * i = std::find(std::begin(array), std::end(array), 3);
-                                    </code></pre>
-                                    <p>C++14 will introduce std::cbegin and std::cend that return const_iterator</p>
-                                </section>
-                                </section>
-
-                                <section>
-                                    <section>
-                                        <p><strong>Problem:</strong> repetitive usage of iterating through container code snippet</p>
-					<pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                        </code></pre>
+                        <p>C++14 will introduce std::cbegin and std::cend that return const_iterator</p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p><strong>Problem:</strong> repetitive usage of iterating through container code snippet</p>
+                        <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 vector&#60int> vec = {2,3,4,5,6};
 for (vector&#60int>::iterator it = vec.begin(); it != vec.end(); ++it)
 {
     //Do some stuff here;
 }
-                                        </code></pre>
-                                    </section>
-                                    <section>
-                                        <h2>Range Based Loops</h2>
-                                        <p> Now we do not have to take care about iterators, array indexes etc. C++11 takes care of it itself.  </p>
-					<pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Range Based Loops</h2>
+                        <p> Now we do not have to take care about iterators, array indexes etc. C++11 takes care of it itself.  </p>
+                        <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 vector&#60int> vec = {2,3,4,5,6};
 for (auto& el : vec)    //element will be reference to element of vector
     ++el;                   
@@ -211,21 +201,20 @@ for (auto el : vec)     //element will be copy of element of vector
 
 for (const auto el : vec)   //const refference should be most used snippet
     foo(el);                
-                                        </code></pre>
-                                    </section>
-                                        <section>
-                                            <h3> It works even for C arrays!</h3>
-                                            <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3> It works even for C arrays!</h3>
+                        <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 int vec[] = {2,3,4,5,6};
 for (const auto& el : vec)
     std::cout << el;
-                                            </code></pre>
-
-                                        </section>
-                                        <section>
-                                            <h3>Range based for custom container</h3>
-                                            <p>"foreach" loop will work if container has declared begin and end member function</p>
-                                            <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Range based for custom container</h3>
+                        <p>"foreach" loop will work if container has declared begin and end member function</p>
+                            <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 template&#60typename T>
 class container
 {
@@ -243,33 +232,32 @@ private:
 container&#60int> c;
 for(const auto& el : c)
     std::cout << el << std::endl;
-
-                                            </code></pre>
-                                        </section>
-                                </section>
-                                <section>
-                                    <section>
-                                    <p><strong>Problem: </strong> Make typedef from function return type</p>
-                                    <pre><code class="cpp" contenteditable>
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p><strong>Problem: </strong> Make typedef from function return type</p>
+                        <pre><code class="cpp" contenteditable>
 someNamespace::someLongType foo();
 typedef someNamespace::someLongType someAnotherType;
-                                    </code></pre>
-                                    </section>
-                                    <section>
-                                        <h2>Decltype</h2>
-                                        <p>Operator <code>decltype()</code> extracts type of variable, expresion etc...</p>
-                                        <pre><code class="cpp" contenteditable>
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Decltype</h2>
+                        <p>Operator <code>decltype()</code> extracts type of variable, expresion etc...</p>
+                        <pre><code class="cpp" contenteditable>
 someNamespace::someLongType foo();
 typedef decltype(foo()) someAnotherType;
-                                        </code></pre> 
-                                        <p>Decltype can be use to declare type of variable</p>
-                                        <pre><code class="cpp" contenteditable>
+                        </code></pre>
+                        <p>Decltype can be use to declare type of variable</p>
+                        <pre><code class="cpp" contenteditable>
 decltype(foo) x;
-                                        </code></pre> 
-                                    </section>
-                                    <section>
-                                        <h3>Differences between Auto and Decltype in type deduction</h3>
-                                        <pre><code class="cpp" contenteditable>
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Differences between Auto and Decltype in type deduction</h3>
+                        <pre><code class="cpp" contenteditable>
 struct S {S(){m = 5} int m;};
 int i;
 const int ci = 6;
@@ -289,55 +277,55 @@ decltype(cri) d;    //const int& d;
 auto a = p->m;      //int a; drops const of ptr;
 decltype(p->m);     //same as auto;
 decltype((p->m)) d; //const int& d;
-                                        </code></pre> 
-                                    </section>
-                                </section>                                                                                                      
-                                <section>
-                                    <section>
-                                         <p><strong>Problem: </strong> Long named return types could make make headers or cpps hard to read</p>
-                                         <pre><code class="cpp" contenteditable>
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p><strong>Problem: </strong> Long named return types could make make headers or cpps hard to read</p>
+                         <pre><code class="cpp" contenteditable>
 std::string foo();
 std::vector&#60std::pair&#60int, std::string>> bar();
 STransportBearerRegisterResp* fun();
-                                         </code></pre>
-                                    </section>
-                                <section>
-                                    <h2> Alternative Function declaration syntax </h2>
-                                    <pre><code class="cpp" contenteditable>
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2> Alternative Function declaration syntax </h2>
+                        <pre><code class="cpp" contenteditable>
 auto foo() -> std::string;
 auto bar() -> std::vector&#60std::pair&#60int, std::string>>;
 auto fun() -> STransportBearerRegisterResp*;
-                                    </code></pre>
-                                </section>
-                                </section>
-                                <section>
-                                    <section>
-                                        <p><strong>Problem:</strong> In templates it is not always clear what should be return value of function</p>
-                                        <pre><code class="cpp" contenteditable>
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p><strong>Problem:</strong> In templates it is not always clear what should be return value of function</p>
+                        <pre><code class="cpp" contenteditable>
 template&#60typename T, typename U>
 XXXX sum(T a, U b)  
 {
     return a+b; //sum of imaginary and real numbers.
                 //witch type is imaginary?
 }
-                                         </code></pre>
-                                    </section>
-                                    <section>
-                                   </code></pre>
-                                    <p>It is very usefull in case of metaprograming where we are not sure of returned type</p>
-                                    <pre><code class="cpp" contenteditable>
+                        </code></pre>
+                    </section>
+                    <section>
+                    </code></pre>
+                    <p>It is very usefull in case of metaprograming where we are not sure of returned type</p>
+                    <pre><code class="cpp" contenteditable>
 template&#60typename T, typename U>
 auto sum(T a, U b) -> decltype(a+b)
 {
     return a+b;
 }
-                                    </code></pre>
-                                </section>
-                                </section>
-				<section>
-                                    <section>
-                                        <p><strong>Problem: </strong> Create template class divider parametrized with divider value</p>
-                                        <pre><code class="cpp" contenteditable>
+                    </code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <p><strong>Problem: </strong> Create template class divider parametrized with divider value</p>
+                    <pre><code class="cpp" contenteditable>
 template&#60int DIV>
 struct Divider
 {
@@ -350,25 +338,25 @@ struct Divider&#60 0 >
 private:
     Divider&#60 0 >() {}
 };
-                                        </pre></code>
-                                    </section>
-                                    <section>
-					<h2>Static Assertions</h2>
-					<p>
-                                            Static assertions allows us check value of constexp and stop compilation in case of false with provided error message.
-					</p>
-					    <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </pre></code>
+                </section>
+                <section>
+                    <h2>Static Assertions</h2>
+                    <p>
+                        Static assertions allows us check value of constexp and stop compilation in case of false with provided error message.
+                    </p>
+                    <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 template&#60int DIV>
 struct Divider
 {
     static_assert(DIV != 0, "cannot divide by zero");
     int operator()(int v) const { return v/DIV; };
 };
-                                            </code></pre>
-                                    </section>
-                                    <section>
-                                        <p><strong>Problem:</strong> allow Divider divide float and doble</p>
-                                        <pre><code class=cpp>
+                    </code></pre>
+                </section>
+                <section>
+                    <p><strong>Problem:</strong> allow Divider divide float and doble</p>
+                    <pre><code class=cpp>
 template&#60int DIV>
 struct Divider
 {
@@ -376,12 +364,12 @@ struct Divider
     int operator()(int v) const { return v/DIV; }
     float operator()(double v) const { return v/DIV; }
 };
-                                       </pre></code>
-                                    </section>
-                                    <section>
-                                        <h2>Type Traits</h2>
-                                        <p>With type_traits we can check properties of types. All traits all compile time constants and we can use it in static assertions</p>
-                                        <pre><code class="cpp" contenteditable>
+                    </pre></code>
+                </section>
+                <section>
+                    <h2>Type Traits</h2>
+                    <p>With type_traits we can check properties of types. All traits all compile time constants and we can use it in static assertions</p>
+                    <pre><code class="cpp" contenteditable>
 template&#60int DIV>
 struct Divider
 {
@@ -392,13 +380,13 @@ struct Divider
         return v/DIV;
     };
 };
-                                        </pre></code>
-                                    </section>
-				</section>
-				<section>
-                                    <section>
-                                        <p><strong>Problem:</strong> Make sure that function will work polymorphically</p>
-                                        <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </pre></code>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <p><strong>Problem:</strong> Make sure that function will work polymorphically</p>
+                    <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 struct root
 {
     int foo() const
@@ -417,11 +405,11 @@ struct tree : public root
 
 root * a = new tree();
 std::cout << a->foo(); // ?
-                                        </code></pre>
-                                    </section>
-                                    <section>
-                                        <h2>Override </h2>
-                                        <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>Override </h2>
+                    <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 struct root
 {
     int foo() const
@@ -440,24 +428,24 @@ struct tree : public root
 
 root * a = new tree();
 std::cout << a->foo(); 
-                                        </code></pre>
-                                    </section>
-                                </section>
-                                <section>
-                                    <section>
-                                        <p><strong>Problem:</strong> Prevent inheritance from a class or overriding a member function</p>
-                                        <ul>
-                                            <li>
-                                                <p>For class we could make private constructor, and make a little bit of magic to create instance of this class without it</p>
-                                            </li>
-                                            <li>
-                                                <p>For member function it was imposible</p>
-                                            </li>
-                                        </ul>
-                                    </section>
-                                    <section>
-                                        <h2>Final member function</h2>
-                                        <pre class='brush: cpp'><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <p><strong>Problem:</strong> Prevent inheritance from a class or overriding a member function</p>
+                    <ul>
+                        <li>
+                            <p>For class we could make private constructor, and make a little bit of magic to create instance of this class without it</p>
+                        </li>
+                        <li>
+                            <p>For member function it was imposible</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Final member function</h2>
+                    <pre class='brush: cpp'><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 struct root {
     virtual int foo() {
         return 0;
@@ -475,11 +463,11 @@ struct leaf : public branch {
         return 2;                 //        'virtual int branch::foo()' 
     }
 }
-                                        </code></pre>
-                                    </section>
-                                    <section>
-                                        <h2>Final class</h2>
-                                        <pre class='brush: cpp'><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>Final class</h2>
+                    <pre class='brush: cpp'><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 struct root
 {
     virtual int foo();
@@ -494,15 +482,14 @@ struct leaf : public branch     // error: cannot derive from 'final'
 {                               // base 'branch' in derived type 'leaf'
     int foo();
 }
-                                        </code></pre>
-                                    </section>
-
-				</section>
-                                <section>
-                                    <section>
-                                        <h2></h2>
-                                        <p><strong>Problem:</strong> define a noncopyable class with default constructor</p>
-                                        <pre><code class="cpp" contenteditable>
+                    </code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2></h2>
+                    <p><strong>Problem:</strong> define a noncopyable class with default constructor</p>
+                    <pre><code class="cpp" contenteditable>
 struct S
 {
     S() {};// We declared copy c-tor, we have to declare rest of them
@@ -510,12 +497,12 @@ private:
     S(const S&);
     S& operator=(const S&);
 }
-                                        </code></pre>
-                                    </section>
-                                     <section>
-                                        <h2>Default and Delete</h2>
-                                        <p>Now we can tell compiler if we want to get default implementation of funcions or not, using default and delete keyword</p>
-                                        <pre><code class="cpp" contenteditable>
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>Default and Delete</h2>
+                    <p>Now we can tell compiler if we want to get default implementation of funcions or not, using default and delete keyword</p>
+                    <pre><code class="cpp" contenteditable>
 struct S
 {
     S() = default;
@@ -524,13 +511,13 @@ struct S
     S(const S&) = delete;
     S& operator=(const S&) = delete;
 }
-                                        </code></pre>
-                                    </section>
-                                </section>
-				<section>
-                                    <section>
-                                        <p><strong>Problem: </strong>Compare of different enums, enum as function argument</p>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <p><strong>Problem: </strong>Compare of different enums, enum as function argument</p>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 enum EColor {EColor_red, EColor_green};
 enum EMaterial {EMaterial_metal, EMaterial_wood};
 
@@ -541,11 +528,11 @@ EColor a = EColor_red;
 EMaterial b = EMaterial_metal;
 if (a == b)
     std::cout&#60&#60foo(b)&#60&#60foo(a)&#60&#60foo(5); // 5
-                                        </code></pre>
-                                    </section>
-                                    <section>
-					<h2>Strongly typped enums</h2>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>Strongly typped enums</h2>
+                      <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 enum class EColor{red, green};
 enum class EMaterial {metal, wood};
 
@@ -557,20 +544,20 @@ EMaterial b = EMaterial::metal;
 foo(b);         // error: no matching function for call to 'foo(EMaterial&amp)'
 if (a == b);    // error: no match for 'operator==' 
                 // (operand types are 'EColor' and 'EMaterial')
-                                        </code></pre>
-                                    </section>
-                                    <section>
-                                        <p><strong>Problem: </strong>Create enum witch is smaller than sizeof(int)</p>
-                                        <ul>
-                                            <li>
-                                                <p>GCC allowed to do that but it was not part of standard</p>
-                                            </li>
-                                        </ul>
-                                    </section>
-                                    <section>
-					<h2>Enums with declared size</h2>
-                                        <p>Now we can define what type should be "under" enum</p>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+                <section>
+                    <p><strong>Problem: </strong>Create enum witch is smaller than sizeof(int)</p>
+                    <ul>
+                        <li>
+                            <p>GCC allowed to do that but it was not part of standard</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Enums with declared size</h2>
+                    <p>Now we can define what type should be "under" enum</p>
+                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 enum EColor {};
 enum EMaterial : short {};
 enum class Color;
@@ -580,19 +567,18 @@ sizeof(EColor);          // sizeof(int)
 sizeof(EMaterial);       // sizeof(short)
 sizeof(Color);           // sizeof(int)
 sizeof(Material);        // sizeof(char) == 1
-                                        </code></pre>
-                                    </section>
-				</section>
-
-				<section>
-                                    <section>
-                                        <p><strong>Problem: </strong> I never know which type is redeclared</p>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <p><strong>Problem: </strong> I never know which type is redeclared</p>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 typedef SomeIntegralType DataBasePrimaryKey ;
 typedef std::vector&#60int> intVector ;
-                                        </code></pre>
-                                        <p><strong>Problem: </strong> Create a type alias that spacializes only few from many template arguments</p>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                    <p><strong>Problem: </strong> Create a type alias that spacializes only few from many template arguments</p>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 #include &#60map>
 template &#60typename T>
 class Dictionary
@@ -606,38 +592,36 @@ public:
 private:
     std::map&#60string, T> _map;
 };
-                                        </code></pre>
-                                    </section>
-                                    <section>
-                                        <h2>New usage of using keyword</h2>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>New usage of using keyword</h2>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 using DataBasePrimaryKey = unsigned int;
 using intVec = std::vector&#60int>;
 //and whole previous example in one line
 template &#60typename T>
 using Dictionary = std::map&#60string, T>;
-                                        </code></pre>
-                                    </section>
-				</section>
-
-				<section>
-                                    <section>
-                                        <p><strong>Problem: </strong>Calculate value of expresion in compilation time to use it as compile time constant</p>
-                                        <ul>
-                                            <li>
-                                                <p>It was partialy avaible by some metaprograming magic and macros, but not for functions</p>
-                                            </li>
-                                        </ul>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <p><strong>Problem: </strong>Calculate value of expresion in compilation time to use it as compile time constant</p>
+                    <ul>
+                        <li>
+                            <p>It was partialy avaible by some metaprograming magic and macros, but not for functions</p>
+                        </li>
+                    </ul>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 template&#60int x> struct F {};
 F&#60std::numeric_limits&#60int>::max()> f;  // ERROR as std::numeric_limits::max() 
                                              // is function;
-                                        </code></pre>
-                                    </section>
-
-                                    <section>
-                                        <h2>constexpr funcions</h2>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>constexpr funcions</h2>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 constexpr int square(int x) {
     return x*x;
 }
@@ -656,13 +640,12 @@ int a;
 std::cin >> a;
 std::cout << factorial(a);
 static_assert(square(0) == 0, "Square 0 not = 0");
-
-                                        </code></pre>
-                                    </section>
-                                    <section>
-                                        <h2>constexpr object</h2>
-                                        <p>It is possible to create whole objects as constexpr. Only requirement is that all member functions will be constexpr</p>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>constexpr object</h2>
+                    <p>It is possible to create whole objects as constexpr. Only requirement is that all member functions will be constexpr</p>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 struct complex
 {
     constexpr complex (double r, double i): re(r), im(i) {}
@@ -673,33 +656,31 @@ private:
 };
 
 constexpr complex C(2, 3);
-                                        </code></pre>
-
-                                        
-                                    </section>
-				</section>
-
-				<section>
-                                    <section>
-                                        <p><strong>Problem: </strong>Create template function with variable number of arguments (i.e. sum, average)</p>
-                                    </section>
-                                    <section>
-					<h2>Variadic Templates</h2>
-                                        <p>Variadic templates allows us to create functions with variable number of parameters of different types.</p>
-                                    </section>
-                                    <section>
-                                        <h2>Variadic syntax</h2>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                    
+                </section>
+            </section>
+            <section>
+                <section>
+                    <p><strong>Problem: </strong>Create template function with variable number of arguments (i.e. sum, average)</p>
+                </section>
+                <section>
+                    <h2>Variadic Templates</h2>
+                    <p>Variadic templates allows us to create functions with variable number of parameters of different types.</p>
+                </section>
+                <section>
+                    <h2>Variadic syntax</h2>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 template&#60typename... Ts>
 function (Ts... Vs)
 {
     /* some magic here */
 }
-                                        </code></pre>
-                                        </section>
-                                        <section>
-                                        <p>Variadic Templates - Simplest example</p>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+                <section>
+                    <p>Variadic Templates - Simplest example</p>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 template&#60typename T>
 T sum(T n)
 {
@@ -711,13 +692,11 @@ T sum(T n, Ts... Vs)
 {
     return n + sum(Vs...);
 }
-                                        </code></pre>
-
-                                    </section>
-                                        <section>
-                                        <p>What functions will be generated by compiler for this excample</p>
-                                        
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+                <section>
+                    <p>What functions will be generated by compiler for this excample</p>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 sum(2,3,4,5,6,7);
 
 int sum(int n, int V1,int V2, int V3, int V4, int V5) {
@@ -735,25 +714,24 @@ int sum(int n, int V1) {
 int sum(int n) {
     return n;
 }
-                                        </code></pre>
-                                    </section>
-                                    <section>
-                                        <h2>Operator sizeof...</h2>
-                                        <p>Operator sizeof... returns number of elements inside of list of types or list of arguments</p>
-                                        <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>Operator sizeof...</h2>
+                    <p>Operator sizeof... returns number of elements inside of list of types or list of arguments</p>
+                    <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 template&#60typename... Ts>
 avg(Ts... Vs) -> decltype(sum(Vs...)/sizeof...(Vs))
 {
     return sum(Vs...)/sizeof...(Vs);
 }
-                                        </code></pre>
-
-				</section>
-                            </section>
-                                <section>
-                                    <section>
-                                        <p><strong>Problem: </strong>A lot of different ways to initialize object depends on its type</p> 
-                                        <pre><code class="cpp" contenteditable>
+                    </code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <p><strong>Problem: </strong>A lot of different ways to initialize object depends on its type</p>
+                    <pre><code class="cpp" contenteditable>
 int i = 0;           
 int i(0);
 int i(); //error -> function declaration
@@ -768,12 +746,12 @@ std::vector&#60int> v;
 v.push_back(1);
 ...
 std::vector&#60int> v = {1,2,3,4,5} // error
-                                        </code></pre>
-                                    </section>
-                                    <section>
-                                        <h2>Uniform initialization syntax and semantics</h2>
-                                        <p>C++11 inteoduces new way to initializeation avaible for all types</p>
-                                        <pre><code class="cpp" contenteditable>
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>Uniform initialization syntax and semantics</h2>
+                    <p>C++11 inteoduces new way to initializeation avaible for all types</p>
+                    <pre><code class="cpp" contenteditable>
 int a1{};
 int a2{5};
 
@@ -789,29 +767,28 @@ int a[]{1,2,3,4,5};
 int *ptr = new int[5]{1,2,3,4,5};
 std::vector&#60int> v{1,2,3,4,5};
 std::map&#60int, string> m{ {1, "one"}, {2, "two"} };
-                                        </code></pre>
-                                    </section>
-                                    <section>
-                                        <h2>C++11 default {} initialization</h2>
-                                        <pre><code class="cpp" contenteditable>
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>C++11 default {} initialization</h2>
+                    <pre><code class="cpp" contenteditable>
 int i{}         // int i = 0;
 int * i{}       // int *i = nullptr;
 double d{}      // double d=0.0;
 int char[5]{}   // all initialized to 0;
 Class c{}       // default constructor; (if no initializer_list c-tor defined)
 Struct s{}      // all members initialized to 0;
-                                        </code></pre>
-                                    </section>
-
-                                    </section>
-                                    <section>
-                                        <section>
-                                            <p><strong>Problem:</strong> Initialize custom container like C array</p>
-                                        </section>
-                                        <section>
-                                            <h2>Initializer's list</h2>
-                                            <p>An object <code>std::initializer_list&#60T></code> allowes us to to get acces to elements provided in {} </p>
-                                            <pre><code class="cpp" contenteditable>
+                    </code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <p><strong>Problem:</strong> Initialize custom container like C array</p>
+                </section>
+                <section>
+                    <h2>Initializer's list</h2>
+                    <p>An object <code>std::initializer_list&#60T></code> allowes us to to get acces to elements provided in {} </p>
+                    <pre><code class="cpp" contenteditable>
 template &#60class T>
 struct S {
     std::vector&#60T> v;
@@ -830,17 +807,17 @@ S&#60A> c{1};              //S(int) c-tor
 
 struct B{B(int){}}
 S&#60B> c{5};               //initializer list c-tor again
-                                            </code></pre>
-                                        </section>
-                                    </section>
-                                    <section>
-                                        <section>
-                                            <p><strong>Problem: </strong> Generate code of concrete instantation of template in every compilation unit it was used</p>
-                                        </section>
-                                        <section>
-                                            <h2>Extern template</h2>
-                                            <p>We can inform compiler that concrete instantation of template class will be instantiated in another compilation unit<p>
-                                            <pre><code class="cpp" contenteditable>
+                    </code></pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <p><strong>Problem: </strong> Generate code of concrete instantation of template in every compilation unit it was used</p>
+                </section>
+                <section>
+                    <h2>Extern template</h2>
+                    <p>We can inform compiler that concrete instantation of template class will be instantiated in another compilation unit<p>
+                     <pre><code class="cpp" contenteditable>
 //template header
 template&#60typename T>
 class someClass
@@ -855,58 +832,49 @@ someClass&#60int> someObject;
 //one cpp
 #include "template_header.hpp
 someClass&#60int> anotherObject;
-                                            </pre></code>
-                                        </section>
-                                    </section>
-                                    <section>
-                                        <h1>Questions</h1>
-                                    </section>
-                                    <section>
-                                        <h2>Usefull materials</h2>
-                                        <ul>
-                                            <li><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3337.pdf">C++ Standard 2012-01-16 Working Draft (it's free)</a></li>
-                                            <li><a href="http://www.stroustrup.com/C++11FAQ.html">C++11 FAQ by Bjerne Stroustrup's</a></li>
-                                            <li><a href="http://thbecker.net/articles/auto_and_decltype/section_01.html">Thomas Becker: Auto and Decltype explained</a></li>
-                                            <li><a href="https://www.youtube.com/watch?v=quZ8gttFgtQ">Leor Zolman: A Zephyr Overview of C++11</a></li>
-                                            <li><a href="https://www.youtube.com/watch?v=_zgq6_zFNGY">Going Native 2012 Variadic Templates (by Andrei Alecsandrescu)</a></li>
-                                        </ul>
-                                    </section>
-			</div>
-
-		</div>
-
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
-
-		<script>
-
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
-
-				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
-
-				// Parallax scrolling
-				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
-				// parallaxBackgroundSize: '2100px 900px',
-
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-				]
-			});
-
-		</script>
-
-	</body>
+                        </pre></code>
+                    </section>
+                </section>
+                <section>
+                    <h1>Questions</h1>
+                </section>
+                <section>
+                    <h2>Usefull materials</h2>
+                    <ul>
+                        <li><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3337.pdf">C++ Standard 2012-01-16 Working Draft (it's free)</a></li>
+                        <li><a href="http://www.stroustrup.com/C++11FAQ.html">C++11 FAQ by Bjerne Stroustrup's</a></li>
+                        <li><a href="http://thbecker.net/articles/auto_and_decltype/section_01.html">Thomas Becker: Auto and Decltype explained</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=quZ8gttFgtQ">Leor Zolman: A Zephyr Overview of C++11</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=_zgq6_zFNGY">Going Native 2012 Variadic Templates (by Andrei Alecsandrescu)</a></li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+        <script>
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+                // Parallax scrolling
+                // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+                // parallaxBackgroundSize: '2100px 900px',
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+        </script>
+    </body>
 </html>
