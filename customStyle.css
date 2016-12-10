@@ -1,3 +1,7 @@
+body {
+  background: #000;
+  background-color: #000; }
+
 ::selection {
   background: #183693;
 }
