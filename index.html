@@ -30,7 +30,7 @@
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
                 <section data-background-image="pics/title.jpg">
-                    <h2>C++11 Features Overview - Compiletime</h2>
+                    <h2>C++11 Features Overview - Compile time</h2>
                     <p>
                         <small>Created by <strong>Marcin Grzebieluch</strong></small>
                     </p>
@@ -53,11 +53,11 @@
   <div style="text-align: right; float: right;">
                     <ul>
                         <li>default and delete</li>
-                        <li>strongly-typped enums</li>
+                        <li>strongly-typed enums</li>
                         <li>alias templates</li>
                         <li>generalized constant expressions</li>
                         <li>variadic templates</li>
-                        <li>initializer's list</li>
+                        <li>initializers list</li>
                         <li>unified initialization</li>
                         <li>extern templates</li>
                     </ul>
@@ -84,7 +84,7 @@ foo(NULL);      //we expect foo(const char*) to be called
                         <aside class="notes">
                             (slides downwards)
 
-                            Yeah, the issue is with the fact that NULL is int, not a pointer, what may be suprising
+                            Yeah, the issue is with the fact that NULL is int, not a pointer, what may be surprising
                         </aside>
                     </section>
                     <section>
@@ -125,7 +125,7 @@ int g = nullptr;                            //error
 char h = nullptr;                           //error
 float i = nullptr;                          //error
 auto j = nullptr;                           //works
-int imposible = a + j;                      //nullptr saves the day!
+int impossible = a + j;                      //nullptr saves the day!
                         </code></pre>
                         <aside class="notes">
                             NULL can be casted to practically anything, what may hide errors, nullptr will generate the error where it's expected
@@ -188,20 +188,20 @@ auto& c = func(*a);     // no constructor called,
                 </section>
                 <section>
                     <section>
-                        <p><strong>Problem:</strong> Make C arrays work with STL containters interface</p>
+                        <p><strong>Problem:</strong> Make C arrays work with STL containers interface</p>
                         <aside class="notes">
                             slides downwards
                         </aside>
                     </section>
                     <section>
                         <h3>std::begin and std::end function</h3>
-                        <p>C++11 introduces free functions for geting begin and end iterator of container. It was required to keep same interface for std container and C arrays</p>
+                        <p>C++11 introduces free functions for getting begin and end iterator of container. It was required to keep same interface for std container and C arrays</p>
                         <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 int array[] = {1,2,3,4};
 for (auto it = std::begin(array); it &#60 std::end(array); ++it)
     ++(*it);
                         </code></pre>
-                        <p>It allows us to use C arrays exacly same way STL as containsers</p>
+                        <p>It allows us to use C arrays exactly same way STL as containers</p>
                         <pre class='brush: cpp'><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 int array[] = {1,2,3,4,5};
 int * i = std::find(std::begin(array), std::end(array), 3);
@@ -236,7 +236,7 @@ for (auto& el : vec)    //element will be reference to element of vector
 for (auto el : vec)     //element will be copy of element of vector
     foo(++el);
 
-for (const auto el : vec)   //const refference should be most used snippet
+for (const auto el : vec)   //const reference should be most used snippet
     foo(el);                
                         </code></pre>
                         <aside class="notes">
@@ -293,7 +293,7 @@ typedef someNamespace::someLongType someAnotherType;
                     </section>
                     <section>
                         <h2>Decltype</h2>
-                        <p>Operator <code>decltype()</code> extracts type of variable, expresion etc...</p>
+                        <p>Operator <code>decltype()</code> extracts type of variable, expression etc...</p>
                         <pre><code class="cpp" contenteditable>
 someNamespace::someLongType foo();
 typedef decltype(foo()) someAnotherType;
@@ -305,7 +305,7 @@ decltype(foo) x;
                         <aside class="notes">
                             (slides downside)
 
-                            Remember that it makes the code more complicated to understand, but it is unenvitable in many situations - mainly, our beloved templates where we sometimes don't really know what we are going to get
+                            Remember that it makes the code more complicated to understand, but it is inevitable in many situations - mainly, our beloved templates where we sometimes don't really know what we are going to get
                         </aside>
                     </section>
                     <section>
@@ -374,7 +374,7 @@ XXXX sum(T a, U b)
                     </section>
                     <section>
                     </code></pre>
-                    <p>It is very usefull in case of metaprograming where we are not sure of returned type</p>
+                    <p>It is very useful in case of metaprograming where we are not sure of returned type</p>
                     <pre><code class="cpp" contenteditable>
 template&#60typename T, typename U>
 auto sum(T a, U b) -> decltype(a+b)
@@ -429,7 +429,7 @@ struct Divider
                     </aside>
                 </section>
                 <section>
-                    <p><strong>Problem:</strong> allow Divider divide float and doble</p>
+                    <p><strong>Problem:</strong> allow Divider divide float and double</p>
                     <pre><code class=cpp>
 template&#60int DIV>
 struct Divider
@@ -439,6 +439,11 @@ struct Divider
     float operator()(double v) const { return v/DIV; }
 };
                     </pre></code>
+                    <aside class="notes">
+                        (slides downwards)
+
+                        Issue here is that we have to repeat ourselves, in case someone missed it.
+                    </aside>
                 </section>
                 <section>
                     <h2>Type Traits</h2>
@@ -455,6 +460,11 @@ struct Divider
     };
 };
                     </pre></code>
+                    <aside class="notes">
+                        Here repetition is not an issue.
+
+                        It also helps us with compilation errors, as instead of 1000s of cryptic messages about missing whatevers, we get a nice error that tells us that we tried to use non-arithmetic type. Neat.
+                    </aside>
                 </section>
             </section>
             <section>
@@ -480,6 +490,17 @@ struct tree : public root
 root * a = new tree();
 std::cout << a->foo(); // ?
                     </code></pre>
+                    <aside class="notes">
+                        (slides downwards)
+
+                        What problems do we have here?
+                        <ul>
+                            <li>no virtual</li>
+                            <li>no const</li>
+                        </ul>
+
+                        So, silently we will still use a method from root even though we probably wanted the one from tree.
+                    </aside>
                 </section>
                 <section>
                     <h2>Override </h2>
@@ -513,9 +534,12 @@ std::cout << a->foo();
                             <p>For class we could make private constructor, and make a little bit of magic to create instance of this class without it</p>
                         </li>
                         <li>
-                            <p>For member function it was imposible</p>
+                            <p>For member function it was impossible</p>
                         </li>
                     </ul>
+                    <aside class="notes">
+                        (slides downwards)
+                    </aside>
                 </section>
                 <section>
                     <h2>Final member function</h2>
@@ -538,6 +562,9 @@ struct leaf : public branch {
     }
 }
                     </code></pre>
+                    <aside class="notes">
+                        slides downwards
+                    </aside>
                 </section>
                 <section>
                     <h2>Final class</h2>
@@ -572,10 +599,15 @@ private:
     S& operator=(const S&);
 }
                     </code></pre>
+                    <aside class="notes">
+                        (slides downwards)
+
+                        Unreadable and not nice. We had boost::noncopyable before to do that for us
+                    </aside>
                 </section>
                 <section>
                     <h2>Default and Delete</h2>
-                    <p>Now we can tell compiler if we want to get default implementation of funcions or not, using default and delete keyword</p>
+                    <p>Now we can tell compiler if we want to get default implementation of functions or not, using default and delete keyword</p>
                     <pre><code class="cpp" contenteditable>
 struct S
 {
@@ -586,6 +618,11 @@ struct S
     S& operator=(const S&) = delete;
 }
                     </code></pre>
+                    <aside class="notes">
+                        default allows compiler for some optimizations, as it is known what we wanted.
+
+                        delete prevents generation of given constructor at all
+                    </aside>
                 </section>
             </section>
             <section>
@@ -603,9 +640,12 @@ EMaterial b = EMaterial_metal;
 if (a == b)
     std::cout&#60&#60foo(b)&#60&#60foo(a)&#60&#60foo(5); // 5
                     </code></pre>
+                    <aside class="notes">
+                        slides downwards
+                    </aside>
                 </section>
                 <section>
-                    <h2>Strongly typped enums</h2>
+                    <h2>Strongly typed enums</h2>
                       <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 enum class EColor{red, green};
 enum class EMaterial {metal, wood};
@@ -619,6 +659,9 @@ foo(b);         // error: no matching function for call to 'foo(EMaterial&amp)'
 if (a == b);    // error: no match for 'operator==' 
                 // (operand types are 'EColor' and 'EMaterial')
                     </code></pre>
+                    <aside class="notes">
+                        (slides downwards)
+                    </aside>
                 </section>
                 <section>
                     <p><strong>Problem: </strong>Create enum witch is smaller than sizeof(int)</p>
@@ -627,6 +670,11 @@ if (a == b);    // error: no match for 'operator=='
                             <p>GCC allowed to do that but it was not part of standard</p>
                         </li>
                     </ul>
+                    <aside class="notes">
+                        (slides downwards)
+
+                        Useful for embedded programming
+                    </aside>
                 </section>
                 <section>
                     <h2>Enums with declared size</h2>
@@ -651,7 +699,7 @@ sizeof(Material);        // sizeof(char) == 1
 typedef SomeIntegralType DataBasePrimaryKey ;
 typedef std::vector&#60int> intVector ;
                     </code></pre>
-                    <p><strong>Problem: </strong> Create a type alias that spacializes only few from many template arguments</p>
+                    <p><strong>Problem: </strong> Create a type alias that specializes only few from many template arguments</p>
                     <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 #include &#60map>
 template &#60typename T>
@@ -667,6 +715,14 @@ private:
     std::map&#60string, T> _map;
 };
                     </code></pre>
+                    <aside class="notes">
+                        (slides downwards)
+
+                        <ol>
+                            <li>is the first one defining a name or the second one?</li>
+                            <li>self-explanatory</li>
+                        </ol>
+                    </aside>
                 </section>
                 <section>
                     <h2>New usage of using keyword</h2>
@@ -677,14 +733,17 @@ using intVec = std::vector&#60int>;
 template &#60typename T>
 using Dictionary = std::map&#60string, T>;
                     </code></pre>
+                    <aside class="notes">
+                        typedef works the same way as simplest usage of using
+                    </aside>
                 </section>
             </section>
             <section>
                 <section>
-                    <p><strong>Problem: </strong>Calculate value of expresion in compilation time to use it as compile time constant</p>
+                    <p><strong>Problem: </strong>Calculate value of expression in compilation time to use it as compile time constant</p>
                     <ul>
                         <li>
-                            <p>It was partialy avaible by some metaprograming magic and macros, but not for functions</p>
+                            <p>It was partially available by some metaprogramming magic and macros, but not for functions</p>
                         </li>
                     </ul>
                     <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
@@ -692,9 +751,12 @@ template&#60int x> struct F {};
 F&#60std::numeric_limits&#60int>::max()> f;  // ERROR as std::numeric_limits::max() 
                                              // is function;
                     </code></pre>
+                    <aside class="notes">
+                        slides downwards
+                    </aside>
                 </section>
                 <section>
-                    <h2>constexpr funcions</h2>
+                    <h2>constexpr functions</h2>
                     <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 constexpr int square(int x) {
     return x*x;
@@ -715,6 +777,21 @@ std::cin >> a;
 std::cout << factorial(a);
 static_assert(square(0) == 0, "Square 0 not = 0");
                     </code></pre>
+                    <aside class="notes">
+                        (slides downwards)
+
+                        <ul>
+                            <li>implies inline</li>
+                            <li>must not be virtual</li>
+                            <li>return and params type must be <a href="http://en.cppreference.com/w/cpp/concept/LiteralType">LiteralType</a></li>
+                            <li>Until C++14:
+                            <ul>
+                                <li>only one return statement</li>
+                                <li>can have <a href="http://en.cppreference.com/w/cpp/language/statements#Expression_statements">null statements</a>, static_asserts, typedefs, usings</li>
+                            </ul>
+                            </li>
+                        </ul>
+                    </aside>
                 </section>
                 <section>
                     <h2>constexpr object</h2>
@@ -731,16 +808,25 @@ private:
 
 constexpr complex C(2, 3);
                     </code></pre>
-                    
+                    <aside class="notes">
+                        <ul>
+                            <li>constructor parameters must be LiteralType</li>
+                            <li>no virtual base classes</li>
+                            <li>constructor is not a function-try-block</li>
+                            <li>constructor must satisfy requirements for constexpr functions</li>
+                        </ul>
+                    </aside>
                 </section>
             </section>
             <section>
                 <section>
                     <p><strong>Problem: </strong>Create template function with variable number of arguments (i.e. sum, average)</p>
+                    <aside class="notes">slides downwards</aside>
                 </section>
                 <section>
                     <h2>Variadic Templates</h2>
                     <p>Variadic templates allows us to create functions with variable number of parameters of different types.</p>
+                    <aside class="notes">slides downwards</aside>
                 </section>
                 <section>
                     <h2>Variadic syntax</h2>
@@ -751,6 +837,7 @@ function (Ts... Vs)
     /* some magic here */
 }
                     </code></pre>
+                    <aside class="notes">slides downwards</aside>
                 </section>
                 <section>
                     <p>Variadic Templates - Simplest example</p>
@@ -767,9 +854,14 @@ T sum(T n, Ts... Vs)
     return n + sum(Vs...);
 }
                     </code></pre>
+                    <aside class="notes">
+                        slides downwards
+
+                        notice how it is similar to functional programming
+                    </aside>
                 </section>
                 <section>
-                    <p>What functions will be generated by compiler for this excample</p>
+                    <p>What functions will be generated by compiler for this example</p>
                     <pre><code contenteditable style="font-size: 18px; margin-top: 20px;" class="cpp">
 sum(2,3,4,5,6,7);
 
@@ -789,6 +881,11 @@ int sum(int n) {
     return n;
 }
                     </code></pre>
+                    <aside class="notes">
+                        slides downwards
+
+                        notice that the more arguments you use, the more your binary is going to grow
+                    </aside>
                 </section>
                 <section>
                     <h2>Operator sizeof...</h2>
@@ -824,7 +921,7 @@ std::vector&#60int> v = {1,2,3,4,5} // error
                 </section>
                 <section>
                     <h2>Uniform initialization syntax and semantics</h2>
-                    <p>C++11 inteoduces new way to initializeation avaible for all types</p>
+                    <p>C++11 introduces new way of initialization available for all types</p>
                     <pre><code class="cpp" contenteditable>
 int a1{};
 int a2{5};
@@ -842,6 +939,11 @@ int *ptr = new int[5]{1,2,3,4,5};
 std::vector&#60int> v{1,2,3,4,5};
 std::map&#60int, string> m{ {1, "one"}, {2, "two"} };
                     </code></pre>
+                    <aside class="notes">
+                        (slides downwards)
+
+                        no idea about the "only pain" - it does not compile as "s" is not a type definition, but it's hardly surprising
+                    </aside>
                 </section>
                 <section>
                     <h2>C++11 default {} initialization</h2>
@@ -860,8 +962,8 @@ Struct s{}      // all members initialized to 0;
                     <p><strong>Problem:</strong> Initialize custom container like C array</p>
                 </section>
                 <section>
-                    <h2>Initializer's list</h2>
-                    <p>An object <code>std::initializer_list&#60T></code> allowes us to to get acces to elements provided in {} </p>
+                    <h2>Initializers list</h2>
+                    <p>An object <code>std::initializer_list&#60T></code> allows us to to get access to elements provided in {} </p>
                     <pre><code class="cpp" contenteditable>
 template &#60class T>
 struct S {
@@ -886,11 +988,11 @@ S&#60B> c{5};               //initializer list c-tor again
             </section>
             <section>
                 <section>
-                    <p><strong>Problem: </strong> Generate code of concrete instantation of template in every compilation unit it was used</p>
+                    <p><strong>Problem: </strong> Generate code of concrete instantiation of template in every compilation unit it was used</p>
                 </section>
                 <section>
                     <h2>Extern template</h2>
-                    <p>We can inform compiler that concrete instantation of template class will be instantiated in another compilation unit<p>
+                    <p>We can inform compiler that concrete instantiation of template class will be instantiated in another compilation unit<p>
                      <pre><code class="cpp" contenteditable>
 //template header
 template&#60typename T>
@@ -913,7 +1015,7 @@ someClass&#60int> anotherObject;
                     <h1>Questions</h1>
                 </section>
                 <section>
-                    <h2>Usefull materials</h2>
+                    <h2>Useful materials</h2>
                     <ul>
                         <li><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3337.pdf">C++ Standard 2012-01-16 Working Draft (it's free)</a></li>
                         <li><a href="http://www.stroustrup.com/C++11FAQ.html">C++11 FAQ by Bjerne Stroustrup's</a></li>
